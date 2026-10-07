@@ -11,7 +11,7 @@ function createApp(books, sessionMiddleware) {
   app.set('view engine', 'handlebars');
   app.set('views', path.join(__dirname, 'views'));
   app.use(express.urlencoded({ extended: false, limit: '16kb' }));
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static(path.join(__dirname, '..', 'public')));
   if (sessionMiddleware) app.use(sessionMiddleware);
   async function show(res, status = 200, error = '', values = {}, sessionInfo = {}) {
     const rows = await books.list();

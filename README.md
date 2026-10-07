@@ -40,3 +40,11 @@ Nếu DNS mặc định báo `ECONNREFUSED querySrv`, cấu hình tùy chọn `M
 Session lưu ở `DB_23IT033.sessions` qua connect-mongo. Cookie chỉ chứa mã phiên được ký, httpOnly, sameSite=lax và secure khi NODE_ENV=production. Session hết hạn sau 24 giờ; store dọn phiên hết hạn mỗi 10 phút bằng quyền remove, không yêu cầu quyền tạo index.
 
 Kiểm tra: mở trang, ghi số lượt và thời điểm bắt đầu phiên; khởi động lại server rồi tải lại cùng trình duyệt. Số lượt tiếp tục tăng, thời điểm bắt đầu không đổi. Trong Compass collection sessions phải có dữ liệu. Kiểm tra này cần mật khẩu session; chưa được thực hiện lúc lập trình.
+
+## Triển khai Vercel
+
+Import repository, nhánh main, Framework Preset Express; giữ mặc định lệnh build và không đặt Output Directory. Root entry app.js khởi tạo và tái sử dụng kết nối; session vẫn nằm trên Atlas. CSS được phục vụ từ public/. Templates được đưa vào function bundle bằng vercel.json.
+
+Khai báo NODE_ENV=production và các biến MONGODB_HOST, MONGODB_READ_USERNAME, MONGODB_READ_PASSWORD, MONGODB_WRITE_USERNAME, MONGODB_WRITE_PASSWORD, MONGODB_SESSION_USERNAME, MONGODB_SESSION_PASSWORD, SESSION_SECRET trên dashboard, không đưa bí mật vào mã nguồn. Không cần PORT hay MONGODB_DNS_SERVERS trên Vercel.
+
+Vercel không dựa vào timer dọn session. Dùng Compass bằng tài khoản quản trị để tạo TTL index trên sessions.expires (expireAfterSeconds: 0); tài khoản session không cần quyền tạo index. Phiên hết hạn vẫn bị store từ chối ngay cả khi MongoDB chưa dọn document.

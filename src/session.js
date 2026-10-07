@@ -10,7 +10,7 @@ async function createSession() {
     await client.connect();
     const store = MongoStore.create({ clientPromise: Promise.resolve(client),
       dbName: student.databaseName, collectionName: 'sessions',
-      autoRemove: 'interval', autoRemoveInterval: 10, ttl: 86400 });
+      autoRemove: process.env.VERCEL ? 'disabled' : 'interval', autoRemoveInterval: 10, ttl: 86400 });
     store.on('error', error => console.error('Lỗi session store:', error.code || error.name));
     return { store, middleware: session({ name: 'books.sid', secret, store,
       resave: false, saveUninitialized: false,
