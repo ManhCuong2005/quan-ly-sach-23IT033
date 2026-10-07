@@ -17,3 +17,5 @@
   </table></div>
   <p>Hiển thị tối đa 100 sách mới nhất.</p>
 </section>
+
+{{#if sessionInfo.visits}}<section><h2>Phiên làm việc</h2><p>Số lượt mở trang trong phiên: <strong>{{sessionInfo.visits}}</strong></p><p>Phiên bắt đầu: {{sessionInfo.startedAt}}</p></section>{{/if}}

@@ -32,3 +32,11 @@ Không đưa `.env` hoặc mật khẩu vào Git. Khi triển khai, khai báo b�
 Nhánh Database đã có form thêm và danh sách sách. Kiểm tra Atlas thực tế vẫn cần mật khẩu và IP Access List hợp lệ. Session sẽ được bổ sung trên nhánh riêng.
 
 Nếu DNS mặc định báo `ECONNREFUSED querySrv`, cấu hình tùy chọn `MONGODB_DNS_SERVERS=1.1.1.1,8.8.8.8` trong `.env`. Tùy chọn chỉ thay resolver của ứng dụng, không đổi DNS Windows.
+
+## Session tập trung
+
+Điền `MONGODB_SESSION_PASSWORD` trong `.env` bằng mật khẩu user `session_23IT033`. `SESSION_SECRET` đã được tạo riêng trong `.env`; giữ nguyên khi khởi động lại và dùng cùng giá trị cho mọi instance trên cloud. Không commit bí mật.
+
+Session lưu ở `DB_23IT033.sessions` qua connect-mongo. Cookie chỉ chứa mã phiên được ký, httpOnly, sameSite=lax và secure khi NODE_ENV=production. Session hết hạn sau 24 giờ; store dọn phiên hết hạn mỗi 10 phút bằng quyền remove, không yêu cầu quyền tạo index.
+
+Kiểm tra: mở trang, ghi số lượt và thời điểm bắt đầu phiên; khởi động lại server rồi tải lại cùng trình duyệt. Số lượt tiếp tục tăng, thời điểm bắt đầu không đổi. Trong Compass collection sessions phải có dữ liệu. Kiểm tra này cần mật khẩu session; chưa được thực hiện lúc lập trình.

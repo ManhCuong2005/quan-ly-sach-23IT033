@@ -30,4 +30,4 @@ async function connectDatabase() {
     throw error;
   }
 }
-module.exports = { connectDatabase };
+module.exports = { connectDatabase, createClient };
