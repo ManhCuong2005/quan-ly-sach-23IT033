@@ -1,6 +1,19 @@
 <section>
   <p class="eyebrow">ĐIỆN TOÁN ĐÁM MÂY</p>
-  <h1>Thư viện sách của bạn</h1>
-  <p>Ứng dụng đang được thiết lập. Chức năng xem danh sách và thêm sách sẽ được bổ sung sau khi kết nối cơ sở dữ liệu.</p>
-  <p>Mã sách bắt đầu bằng <strong>{{student.bookCodePrefix}}</strong>. Thuế VAT áp dụng: <strong>{{student.vatPercent}}%</strong>.</p>
+  <h1>Quản lý sách</h1>
+  <p>Mã sách bắt đầu bằng <strong>{{student.bookCodePrefix}}</strong>. VAT: <strong>{{student.vatPercent}}%</strong>.</p>
+  {{#if error}}<p role="alert">{{error}}</p>{{/if}}
+  <form method="post" action="/books">
+    <label>Mã sách <input name="code" value="{{values.code}}" placeholder="033001" maxlength="64" required></label>
+    <label>Tên sách <input name="title" value="{{values.title}}" maxlength="200" required></label>
+    <label>Giá trước thuế (VNĐ) <input name="price" value="{{values.price}}" type="number" min="0" max="1000000000" step="1" required></label>
+    <button type="submit">Thêm sách</button>
+  </form>
+  <h2>Danh sách sách</h2>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Mã</th><th>Tên sách</th><th>Giá trước thuế</th><th>Giá sau thuế</th></tr></thead>
+    <tbody>{{#each books}}<tr><td>{{code}}</td><td>{{title}}</td><td>{{price}} ₫</td><td>{{priceAfterTax}} ₫</td></tr>
+    {{else}}<tr><td colspan="4">Chưa có sách. Hãy thêm sách đầu tiên.</td></tr>{{/each}}</tbody>
+  </table></div>
+  <p>Hiển thị tối đa 100 sách mới nhất.</p>
 </section>
