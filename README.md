@@ -30,3 +30,5 @@ Không đưa `.env` hoặc mật khẩu vào Git. Khi triển khai, khai báo b�
 Ứng dụng dùng hai MongoClient: `find` chỉ qua user đọc và `insertOne` chỉ qua user ghi. Giá sau thuế được tính phía server rồi lưu cùng giá gốc và VAT. Giá dùng số nguyên VNĐ; giá sau thuế làm tròn tới VNĐ.
 
 Nhánh Database đã có form thêm và danh sách sách. Kiểm tra Atlas thực tế vẫn cần mật khẩu và IP Access List hợp lệ. Session sẽ được bổ sung trên nhánh riêng.
+
+Nếu DNS mặc định báo `ECONNREFUSED querySrv`, cấu hình tùy chọn `MONGODB_DNS_SERVERS=1.1.1.1,8.8.8.8` trong `.env`. Tùy chọn chỉ thay resolver của ứng dụng, không đổi DNS Windows.

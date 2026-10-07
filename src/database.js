@@ -1,5 +1,9 @@
 const { MongoClient } = require('mongodb');
 const student = require('./config/student');
+// DNS tùy chọn cho mạng không phân giải được SRV Atlas.
+if (process.env.MONGODB_DNS_SERVERS) {
+  require('node:dns').setServers(process.env.MONGODB_DNS_SERVERS.split(',').map(value => value.trim()).filter(Boolean));
+}
 function createClient(kind) {
   const host = process.env.MONGODB_HOST;
   const username = process.env['MONGODB_' + kind + '_USERNAME'];
