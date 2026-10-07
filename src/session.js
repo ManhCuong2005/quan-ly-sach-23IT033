@@ -1,5 +1,5 @@
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
+const { MongoStore } = require('connect-mongo');
 const { createClient } = require('./database');
 const student = require('./config/student');
 async function createSession() {
